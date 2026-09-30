@@ -63,7 +63,7 @@ nav a.is-current { color: var(--heading); font-weight: 600; text-decoration: und
 .hero-top { display: flex; justify-content: space-between; align-items: center; gap: 32px; }
 h1 { font-size: 50px; font-weight: 600; color: var(--heading); letter-spacing: 2px; margin-bottom: 16px; }
 h1 span { font-size: 32px; font-weight: 400; letter-spacing: 0; color: var(--subheading); margin-left: 20px; }
-.hero-role { margin-bottom: 12px; font-size: 20px; }
+.hero-role { margin-bottom: 12px; font-size: 17px; }
 .hero-school { color: var(--muted); font-size: 18px; }
 .hero-visual { flex-shrink: 0; }
 .hero-visual figure { padding: 9px; border: 1px solid #d8ceb9; background: #fffefa; box-shadow: 0 12px 32px #3444390b; }
@@ -157,7 +157,7 @@ footer { border-top: 1px solid var(--line); padding: 25px 0; }
   .hero-top { display: block; position: relative; }
   h1 { font-size: 38px; line-height: 1.3; margin-bottom: 18px; padding-right: 166px; min-height: 160px; }
   h1 span { display: block; font-size: 25px; margin: 8px 0 0; }
-  .hero-role { font-size: 17px; margin-bottom: 12px; }
+  .hero-role { font-size: 15px; margin-bottom: 12px; }
   .hero-school { font-size: 16px; }
   .hero-visual img { width: 140px; height: 140px; }
   .hero-visual figure { padding: 6px; }
@@ -196,7 +196,8 @@ footer { border-top: 1px solid var(--line); padding: 25px 0; }
   .work-card > a:hover, .work-card > a:hover img { transform: none; }
 }
 @media print {
-  .site-header, .skip-link, .back-top { display: none; }
+  .site-header, .skip-link, .back-top,
+  .reading-progress, .section-indicator, .works-toolbar { display: none; }
   .container { width: 100%; }
   .hero { padding-top: 0; }
   .section { padding: 20px 0; }
@@ -358,4 +359,122 @@ footer { border-top: 1px solid var(--line); padding: 25px 0; }
 
 @media (max-width: 640px) {
   .works-sort { margin-left: 0; }
+}
+
+/* ==========================================================
+   视觉精修层（美化用，不影响结构与脚本）
+   ========================================================== */
+
+/* 1. 首屏：淡淡的双手向渐变，让页头不是一块纯白 */
+.hero {
+  background:
+    radial-gradient(1100px 420px at 88% -12%, rgba(66, 99, 91, .10), transparent 62%),
+    radial-gradient(900px 340px at -6% 4%, rgba(184, 162, 125, .12), transparent 58%);
+}
+
+/* 2. 品牌名前加一枚主色圆点，导航更有精神 */
+.brand::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 11px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--gold));
+  vertical-align: 2px;
+}
+
+/* 3. 英文名 7.am：渐变文字，代替单调的棕色 */
+h1 span {
+  background: linear-gradient(92deg, var(--accent) 10%, var(--gold) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 4. 头像：圆形 + 渐变描边环 + 轻微悬停动效 */
+.hero-visual figure {
+  padding: 7px;
+  border: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--gold) 100%);
+  box-shadow: 0 18px 40px rgba(37, 74, 64, .16);
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+.hero-visual figure:hover {
+  transform: translateY(-4px) rotate(1.5deg);
+  box-shadow: 0 24px 48px rgba(37, 74, 64, .22);
+}
+.hero-visual img { border-radius: 50%; }
+
+/* 5. 「学习方向」标签改成胶囊徽章 */
+.research-direction > span {
+  display: inline-block;
+  padding: 5px 16px 6px;
+  border-radius: 999px;
+  background: var(--heading-wash);
+  box-shadow: inset 0 0 0 1px rgba(66, 99, 91, .18);
+}
+
+/* 6. 栏目标题：去掉色块，改为渐变下划线条，更干净 */
+.section-heading h2 {
+  display: block;
+  position: relative;
+  padding: 0 0 12px;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+.section-heading h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 58px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+}
+
+/* 7. 技能条目：从"三条横线"升级为悬浮卡片 */
+.skills-list { gap: 24px; }
+.skills-list li {
+  padding: 18px 22px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fffdf8;
+  box-shadow: 0 6px 16px rgba(52, 68, 57, .05);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.skills-list li:hover {
+  transform: translateY(-3px);
+  border-color: #c9bfa8;
+  box-shadow: 0 14px 28px rgba(52, 68, 57, .09);
+}
+.skills-list li::marker { content: none; }
+
+/* 8. 作品卡片：圆角放大一点，封面底色统一更柔和 */
+.work-card > a { border-radius: 12px; }
+.work-cover { border-radius: 0; }
+
+/* 9. 基本资料四栏：每栏加一条主色小竖线，层次更清楚 */
+.profile-details > div {
+  padding-left: 14px;
+  border-left: 2px solid rgba(184, 162, 125, .45);
+}
+
+/* 10. 页脚：居中留白，比原来更稳 */
+footer { background: #f4f2eb; }
+.footer-inner { justify-content: center; gap: 40px; }
+
+/* 打印时隐藏装饰性下划线条 */
+@media print {
+  .section-heading h2::after { display: none; }
+  .hero { background: none; }
+}
+
+/* 手机端微调：卡片内边距收紧、头像环保持圆形 */
+@media (max-width: 640px) {
+  .skills-list li { padding: 14px 16px 13px; }
+  .profile-details > div { padding-left: 10px; }
 }
